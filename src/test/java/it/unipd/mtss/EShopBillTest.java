@@ -25,7 +25,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void EmptyBasketTest() throws TotalAmountExceededException {
+    public void EmptyOrderTest() throws TotalAmountExceededException {
         // Arrange
         List<EItem> items = new LinkedList<>();
 
@@ -37,7 +37,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void NonEmptyBasketTest() throws TotalAmountExceededException {
+    public void NonEmptyOrderTest() throws TotalAmountExceededException {
         // Arrange
         List<EItem> items = new LinkedList<>();
         EItem item1 = new EItem("Logitech xxx", EItemType.MOUSE, 50.00);
@@ -49,5 +49,57 @@ public class EShopBillTest {
 
         // Assert
         assert total == 100.00;
+    }
+
+    @Test
+    public void LessFiveProcessorOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new LinkedList<>();
+        EItem item1 = new EItem("Amd xxx", EItemType.PROCESSOR, 10.00);
+        EItem item2 = new EItem("Amd xxx", EItemType.PROCESSOR, 20.00);
+        EItem item3 = new EItem("Amd xxx", EItemType.PROCESSOR, 30.00);
+        EItem item4 = new EItem("Amd xxx", EItemType.PROCESSOR, 40.00);
+        EItem item5 = new EItem("Amd xxx", EItemType.PROCESSOR, 50.00);
+        EItem item6 = new EItem("Logitech xxx", EItemType.MOUSE, 60.00);
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+        items.add(item4);
+        items.add(item5);
+        items.add(item6);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 210.00;
+
+    }
+
+    @Test
+    public void MoreFiveProcessorOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new LinkedList<>();
+        EItem item1 = new EItem("Amd xxx", EItemType.PROCESSOR, 10.00);
+        EItem item2 = new EItem("Amd xxx", EItemType.PROCESSOR, 20.00);
+        EItem item3 = new EItem("Amd xxx", EItemType.PROCESSOR, 30.00);
+        EItem item4 = new EItem("Amd xxx", EItemType.PROCESSOR, 40.00);
+        EItem item5 = new EItem("Amd xxx", EItemType.PROCESSOR, 50.00);
+        EItem item6 = new EItem("Amd xxx", EItemType.PROCESSOR, 60.00);
+        EItem item7 = new EItem("Logitech xxx", EItemType.MOUSE, 70.00);
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+        items.add(item4);
+        items.add(item5);
+        items.add(item6);
+        items.add(item7);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 275.00;
+
     }
 }

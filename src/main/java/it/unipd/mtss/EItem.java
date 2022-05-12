@@ -18,4 +18,5 @@ public class EItem {
     public double getPrice() {
         return price;
     }
+    public EItemType getEItemType() {return type;}
 }

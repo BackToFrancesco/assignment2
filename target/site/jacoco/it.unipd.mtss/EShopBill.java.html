@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EShopBill.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-shop-manager</a> &gt; <a href="index.source.html" class="el_package">it.unipd.mtss</a> &gt; <span class="el_source">EShopBill.java</span></div><h1>EShopBill.java</h1><pre class="source lang-java linenums">////////////////////////////////////////////////////////////////////
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EShopBill.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">e-shop-manager</a> &gt; <a href="index.source.html" class="el_package">it.unipd.mtss</a> &gt; <span class="el_source">EShopBill.java</span></div><h1>EShopBill.java</h1><pre class="source lang-java linenums">////////////////////////////////////////////////////////////////////
 // Alessandro Cavaliere 1224440
 // Filippo Brugnolaro 1217321
 ////////////////////////////////////////////////////////////////////
@@ -10,9 +10,24 @@ import java.util.List;
     @Override
     public double getOrderPrice(List&lt;EItem&gt; itemsOrdered, User user)
             throws TotalAmountExceededException {
-<span class="fc" id="L13">        return itemsOrdered.stream()</span>
+<span class="fc" id="L13">        double totalAmount = itemsOrdered.stream()</span>
 <span class="fc" id="L14">                .mapToDouble(eItem -&gt; eItem.getPrice())</span>
 <span class="fc" id="L15">                .sum();</span>
+<span class="fc" id="L16">        double processorDiscount = getProcessorDiscount(itemsOrdered);</span>
+<span class="fc" id="L17">        return totalAmount-processorDiscount;</span>
+    }
+
+    private double getProcessorDiscount(List&lt;EItem&gt; itemsOrdered) {
+<span class="fc" id="L21">         long numberProcessor = itemsOrdered.stream()</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">                .filter(item -&gt; item.getEItemType() == EItemType.PROCESSOR)</span>
+<span class="fc" id="L23">                 .count();</span>
+<span class="fc" id="L24">        double minimumPrice = 0;</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">         if(numberProcessor &gt; 5) {</span>
+<span class="fc" id="L26">             minimumPrice = itemsOrdered.stream()</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">                     .filter(item -&gt; item.getEItemType() == EItemType.PROCESSOR)</span>
+<span class="fc" id="L28">                     .mapToDouble(item -&gt; item.getPrice()).min().getAsDouble();</span>
+         }
+<span class="fc" id="L30">         return 0.5*minimumPrice;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,6 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-e-shop-manager,it.unipd.mtss,EItemType,0,39,0,0,0,8,0,2,0,2
 e-shop-manager,it.unipd.mtss,User,0,18,0,0,0,7,0,1,0,1
-e-shop-manager,it.unipd.mtss,EShopBill,0,12,0,0,0,4,0,3,0,3
+e-shop-manager,it.unipd.mtss,EItemType,0,39,0,0,0,8,0,2,0,2
+e-shop-manager,it.unipd.mtss,EShopBill,0,64,0,6,0,15,0,10,0,7
+e-shop-manager,it.unipd.mtss,EItem,0,18,0,0,0,7,0,3,0,3
 e-shop-manager,it.unipd.mtss,TotalAmountExceededException,3,0,0,0,1,0,1,0,1,0
-e-shop-manager,it.unipd.mtss,EItem,0,15,0,0,0,6,0,2,0,2

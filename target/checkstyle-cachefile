@@ -1,8 +1,8 @@
-#Fri May 13 00:03:44 CEST 2022
-/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/EShopBill.java=1652393014722
-configuration*?=B4C86EC48076CA294AFC7A22685CAB6BE7BF9957
-/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/TotalAmountExceededException.java=1652392946634
-/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/EItemType.java=1652392946654
-/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/Bill.java=1652392970058
-/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/EItem.java=1652392946642
-/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/User.java=1652392946618
+#Fri May 13 00:49:12 CEST 2022
+configuration*?=D8CB5B56E09851A76D5E8563BE55C83B8D120858
+/home/filippobrugnolaro/Desktop/TOS/assignment2/src/main/java/it/unipd/mtss/EShopBill.java=1652394886562
+/home/filippobrugnolaro/Desktop/TOS/assignment2/src/main/java/it/unipd/mtss/User.java=1652393328132
+/home/filippobrugnolaro/Desktop/TOS/assignment2/src/main/java/it/unipd/mtss/EItem.java=1652393979484
+/home/filippobrugnolaro/Desktop/TOS/assignment2/src/main/java/it/unipd/mtss/TotalAmountExceededException.java=1652393328132
+/home/filippobrugnolaro/Desktop/TOS/assignment2/src/main/java/it/unipd/mtss/EItemType.java=1652393328132
+/home/filippobrugnolaro/Desktop/TOS/assignment2/src/main/java/it/unipd/mtss/Bill.java=1652393328132
