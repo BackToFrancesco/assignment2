@@ -1,3 +1,8 @@
-#Thu May 12 20:45:31 UTC 2022
-configuration*?=314E1017E51C74BEBD34FC3F1D1F199DF8B9540A
-/home/runner/work/assignment2/assignment2/src/main/java/it/unipd/mtss/App.java=1652388316694
+#Fri May 13 00:03:44 CEST 2022
+/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/EShopBill.java=1652393014722
+configuration*?=B4C86EC48076CA294AFC7A22685CAB6BE7BF9957
+/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/TotalAmountExceededException.java=1652392946634
+/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/EItemType.java=1652392946654
+/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/Bill.java=1652392970058
+/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/EItem.java=1652392946642
+/home/alessandro/Scaricati/assignment2/src/main/java/it/unipd/mtss/User.java=1652392946618

@@ -46,7 +46,7 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#it.unipd.mtss.App.java">it/unipd/mtss/App.java</a>
+                  <a href="${project.url}/checkstyle.html#it.unipd.mtss.EShopBill.java">it/unipd/mtss/EShopBill.java</a>
                 </td>
                 <td>
                   0
