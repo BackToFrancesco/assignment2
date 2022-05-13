@@ -124,7 +124,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void MoreTenProcessorOrderTest() throws TotalAmountExceededException {
+    public void MoreTenMouseOrderTest() throws TotalAmountExceededException {
         // Arrange
         List<EItem> items = new LinkedList<>();
 
@@ -158,5 +158,85 @@ public class EShopBillTest {
 
         // Assert
         assert total == 67.00;
+    }
+
+@Test
+
+    public void NumberMouseEqualsKeyboardGreaterThanZeroDiscountTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new LinkedList<>();
+
+        EItem item1 = new EItem("Logitech xxx", EItemType.MOUSE, 10.00);
+        EItem item2 = new EItem("Logitech xxx", EItemType.MOUSE, 20.00);
+        EItem item3 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 20.00);
+        EItem item4 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 20.00);
+        EItem item5 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 20.00);
+        EItem item6 = new EItem("MSI xxx", EItemType.KEYBOARD, 30.00);
+        EItem item7 = new EItem("MSI xxx", EItemType.KEYBOARD, 50.00);
+
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+        items.add(item4);
+        items.add(item5);
+        items.add(item6);
+        items.add(item7);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 160.00;
+    }
+
+    @Test
+
+    public void NumberMouseEqualsKeyboardEqualZeroDiscountTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new LinkedList<>();
+        EItem item1 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
+        EItem item2 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
+        EItem item3 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
+
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 300.00;
+    }
+
+    @Test
+
+    public void NumberMouseDiffersKeyboardDiscountTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new LinkedList<>();
+
+        EItem item1 = new EItem("Logitech xxx", EItemType.MOUSE, 10.00);
+        EItem item2 = new EItem("Logitech xxx", EItemType.MOUSE, 20.00);
+        EItem item3 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
+        EItem item4 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
+        EItem item5 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
+        EItem item6 = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 30.00);
+        EItem item7 = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 40.00);
+        EItem item8 = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 50.00);
+
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+        items.add(item4);
+        items.add(item5);
+        items.add(item6);
+        items.add(item7);
+        items.add(item8);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 450.00;
     }
 }
