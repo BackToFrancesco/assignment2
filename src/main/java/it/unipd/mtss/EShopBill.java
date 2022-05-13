@@ -16,9 +16,11 @@ public class EShopBill implements Bill {
 
         double processorDiscount = getProcessorDiscount(itemsOrdered);
         double mouseDiscount = getMouseDiscount(itemsOrdered);
-        double mouseOrKeyboardDiscount = getMouseOrKeyBoardDiscount(itemsOrdered);
+        double mouseOrKeyboardDiscount =
+                getMouseOrKeyBoardDiscount(itemsOrdered);
 
-        return totalAmount - processorDiscount - mouseDiscount - mouseOrKeyboardDiscount;
+        return totalAmount - processorDiscount - mouseDiscount -
+                mouseOrKeyboardDiscount;
     }
 
     private double getProcessorDiscount(List<EItem> itemsOrdered)
