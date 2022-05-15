@@ -4,6 +4,7 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss;
 
+import java.time.Instant;
 import java.util.Date;
 
 public class User {

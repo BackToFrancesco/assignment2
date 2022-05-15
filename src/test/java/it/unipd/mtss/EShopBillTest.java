@@ -4,20 +4,18 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 public class EShopBillTest {
-
     private EShopBill bill = new EShopBill();
-    private User user = new User("TEST", "Test", "Testing", "test@test.com", Date.from(Instant.EPOCH));
+    private final User user = new User("TEST", "Test", "Testing", "test@test.com", Date.from(Instant.EPOCH));
 
     @Before
     public void before() {
@@ -39,7 +37,7 @@ public class EShopBillTest {
     @Test
     public void NonEmptyOrderTest() throws TotalAmountExceededException {
         // Arrange
-        List<EItem> items = new LinkedList<>();
+        List<EItem> items = new ArrayList<>();
         EItem item1 = new EItem("Logitech xxx", EItemType.MOUSE, 50.00);
         items.add(item1);
         items.add(item1);
@@ -52,21 +50,15 @@ public class EShopBillTest {
     }
 
     @Test
-    public void LessFiveProcessorOrderTest() throws TotalAmountExceededException {
+    public void LessThanFiveProcessorDiscountOrderTest() throws TotalAmountExceededException {
         // Arrange
-        List<EItem> items = new LinkedList<>();
-        EItem item1 = new EItem("Amd xxx", EItemType.PROCESSOR, 10.00);
-        EItem item2 = new EItem("Amd xxx", EItemType.PROCESSOR, 20.00);
-        EItem item3 = new EItem("Amd xxx", EItemType.PROCESSOR, 30.00);
-        EItem item4 = new EItem("Amd xxx", EItemType.PROCESSOR, 40.00);
-        EItem item5 = new EItem("Amd xxx", EItemType.PROCESSOR, 50.00);
-        EItem item6 = new EItem("Logitech xxx", EItemType.MOUSE, 60.00);
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
-        items.add(item4);
-        items.add(item5);
-        items.add(item6);
+        List<EItem> items = new ArrayList<>();
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 10.00));
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 20.00));
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 30.00));
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 40.00));
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 50.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 60.00));
 
         // Act
         double total = bill.getOrderPrice(items, user);
@@ -76,23 +68,16 @@ public class EShopBillTest {
     }
 
     @Test
-    public void MoreFiveProcessorOrderTest() throws TotalAmountExceededException {
+    public void MoreThanFiveProcessorDiscountOrderTest() throws TotalAmountExceededException {
         // Arrange
-        List<EItem> items = new LinkedList<>();
-        EItem item1 = new EItem("Amd xxx", EItemType.PROCESSOR, 10.00);
-        EItem item2 = new EItem("Amd xxx", EItemType.PROCESSOR, 20.00);
-        EItem item3 = new EItem("Amd xxx", EItemType.PROCESSOR, 30.00);
-        EItem item4 = new EItem("Amd xxx", EItemType.PROCESSOR, 40.00);
-        EItem item5 = new EItem("Amd xxx", EItemType.PROCESSOR, 50.00);
-        EItem item6 = new EItem("Amd xxx", EItemType.PROCESSOR, 60.00);
-        EItem item7 = new EItem("Logitech xxx", EItemType.MOUSE, 70.00);
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
-        items.add(item4);
-        items.add(item5);
-        items.add(item6);
-        items.add(item7);
+        List<EItem> items = new ArrayList<>();
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 10.00));
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 20.00));
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 30.00));
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 40.00));
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 50.00));
+        items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 60.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 70.00));
 
         // Act
         double total = bill.getOrderPrice(items, user);
@@ -102,20 +87,15 @@ public class EShopBillTest {
     }
 
     @Test
-    public void LessTenMouseOrderTest() throws TotalAmountExceededException {
+    public void LessThanTenMouseOrderTest() throws TotalAmountExceededException {
         // Arrange
-        List<EItem> items = new LinkedList<>();
-        EItem item1 = new EItem("Logitech xxx", EItemType.MOUSE, 5.00);
-        EItem item2 = new EItem("Logitech xxx", EItemType.MOUSE, 6.00);
-        EItem item3 = new EItem("Logitech xxx", EItemType.MOUSE, 7.00);
-        EItem item4 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 130.00);
-        EItem item5 = new EItem("Intel i5 xxx", EItemType.PROCESSOR, 73.41);
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
-        items.add(item4);
-        items.add(item5);
-
+        List<EItem> items = new ArrayList<>();
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 5.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 6.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 7.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 130.00));
+        items.add(new EItem("Intel i5 xxx", EItemType.PROCESSOR, 73.41));
+        
         // Act
         double total = bill.getOrderPrice(items, user);
 
@@ -124,34 +104,23 @@ public class EShopBillTest {
     }
 
     @Test
-    public void MoreTenMouseOrderTest() throws TotalAmountExceededException {
+    public void MoreThanTenMouseOrderTest() throws TotalAmountExceededException {
         // Arrange
-        List<EItem> items = new LinkedList<>();
+        List<EItem> items = new ArrayList<>();
 
-        EItem item1 = new EItem("Logitech xxx", EItemType.MOUSE, 5.00);
-        EItem item2 = new EItem("Logitech xxx", EItemType.MOUSE, 6.00);
-        EItem item3 = new EItem("Logitech xxx", EItemType.MOUSE, 7.00);
-        EItem item4 = new EItem("Logitech xxx", EItemType.MOUSE, 5.00);
-        EItem item5 = new EItem("Logitech xxx", EItemType.MOUSE, 6.00);
-        EItem item6 = new EItem("Logitech xxx", EItemType.MOUSE, 7.00);
-        EItem item7 = new EItem("Logitech xxx", EItemType.MOUSE, 5.00);
-        EItem item8 = new EItem("Logitech xxx", EItemType.MOUSE, 6.00);
-        EItem item9 = new EItem("Logitech xxx", EItemType.MOUSE, 7.00);
-        EItem item10 = new EItem("Logitech xxx", EItemType.MOUSE, 5.00);
-        EItem item11 = new EItem("Logitech xxx", EItemType.MOUSE, 6.00);
-        EItem item12 = new EItem("Logitech xxx", EItemType.MOUSE, 7.00);
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
-        items.add(item4);
-        items.add(item5);
-        items.add(item6);
-        items.add(item7);
-        items.add(item8);
-        items.add(item9);
-        items.add(item10);
-        items.add(item11);
-        items.add(item12);
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 5.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 6.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 7.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 5.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 6.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 7.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 5.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 6.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 7.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 5.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 6.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 7.00));
+
 
         // Act
         double total = bill.getOrderPrice(items, user);
@@ -160,27 +129,18 @@ public class EShopBillTest {
         assert total == 67.00;
     }
 
-@Test
-
+    @Test
     public void NumberMouseEqualsKeyboardGreaterThanZeroDiscountTest() throws TotalAmountExceededException {
         // Arrange
-        List<EItem> items = new LinkedList<>();
+        List<EItem> items = new ArrayList<>();
 
-        EItem item1 = new EItem("Logitech xxx", EItemType.MOUSE, 10.00);
-        EItem item2 = new EItem("Logitech xxx", EItemType.MOUSE, 20.00);
-        EItem item3 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 20.00);
-        EItem item4 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 20.00);
-        EItem item5 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 20.00);
-        EItem item6 = new EItem("MSI xxx", EItemType.KEYBOARD, 30.00);
-        EItem item7 = new EItem("MSI xxx", EItemType.KEYBOARD, 50.00);
-
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
-        items.add(item4);
-        items.add(item5);
-        items.add(item6);
-        items.add(item7);
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 10.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 20.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 20.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 20.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 20.00));
+        items.add(new EItem("MSI xxx", EItemType.KEYBOARD, 30.00));
+        items.add(new EItem("MSI xxx", EItemType.KEYBOARD, 50.00));
 
         // Act
         double total = bill.getOrderPrice(items, user);
@@ -190,17 +150,12 @@ public class EShopBillTest {
     }
 
     @Test
-
     public void NumberMouseEqualsKeyboardEqualZeroDiscountTest() throws TotalAmountExceededException {
         // Arrange
-        List<EItem> items = new LinkedList<>();
-        EItem item1 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
-        EItem item2 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
-        EItem item3 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
-
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
+        List<EItem> items = new ArrayList<>();
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00));
 
         // Act
         double total = bill.getOrderPrice(items, user);
@@ -210,33 +165,123 @@ public class EShopBillTest {
     }
 
     @Test
-
     public void NumberMouseDiffersKeyboardDiscountTest() throws TotalAmountExceededException {
         // Arrange
-        List<EItem> items = new LinkedList<>();
+        List<EItem> items = new ArrayList<>();
 
-        EItem item1 = new EItem("Logitech xxx", EItemType.MOUSE, 10.00);
-        EItem item2 = new EItem("Logitech xxx", EItemType.MOUSE, 20.00);
-        EItem item3 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
-        EItem item4 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
-        EItem item5 = new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00);
-        EItem item6 = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 30.00);
-        EItem item7 = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 40.00);
-        EItem item8 = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 50.00);
-
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
-        items.add(item4);
-        items.add(item5);
-        items.add(item6);
-        items.add(item7);
-        items.add(item8);
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 10.00));
+        items.add(new EItem("Logitech xxx", EItemType.MOUSE, 20.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 30.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 40.00));
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 50.00));
 
         // Act
         double total = bill.getOrderPrice(items, user);
 
         // Assert
         assert total == 450.00;
+    }
+
+    @Test
+    public void LessThanOneThousandTotalOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 340.00));
+        items.add(new EItem("Intel i9 10900k", EItemType.PROCESSOR, 449.00));
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 789.00;
+    }
+
+    @Test
+    public void MoreThanOneThousandTotalOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+        items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 640.00));
+        items.add(new EItem("Intel i9 10900k", EItemType.PROCESSOR, 449.00));
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 980.10;
+    }
+
+    @Test
+    public void ProcessorAndTotalAmountDiscountOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+        EItem genericProcessor = new EItem("Intel i9 10900k", EItemType.PROCESSOR, 449.00);
+        EItem specificProcessor = new EItem("Intel i5 5280", EItemType.PROCESSOR, 150.00);
+        EItem item1 = new EItem("Logitech M185", EItemType.MOUSE, 15.00);
+
+        items.add(item1);
+        items.add(specificProcessor);
+        for (int i = 0; i < 5; i++)
+            items.add(genericProcessor);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 2410 - 241 - 75;
+    }
+
+    @Test
+    public void ProcessorAndNoTotalAmountDiscountOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+        EItem genericProcessor = new EItem("Intel i2 1024", EItemType.PROCESSOR, 150.00);
+        EItem specificProcessor = new EItem("Intel Pentium", EItemType.PROCESSOR, 90.00);
+
+        items.add(specificProcessor);
+        for (int i = 0; i < 6; i++)
+            items.add(genericProcessor);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 990 - 45;
+    }
+
+    @Test
+    public void MouseAndTotalAmountDiscountOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+        EItem genericMouse = new EItem("Logitech M185", EItemType.MOUSE, 15.00);
+        EItem processor = new EItem("Intel i9 10900k", EItemType.PROCESSOR, 849.00);
+
+        items.add(processor);
+        for (int i = 0; i < 15; i++)
+            items.add(genericMouse);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 1074 - 107.4 - 15;
+    }
+
+    @Test
+    public void MouseAndNoTotalAmountDiscountOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+        EItem genericMouse = new EItem("Logitech M185", EItemType.MOUSE, 15.00);
+
+        for (int i = 0; i < 20; i++)
+            items.add(genericMouse);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 300 - 15;
     }
 }

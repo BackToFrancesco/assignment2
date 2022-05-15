@@ -11,7 +11,7 @@ public class EShopBill implements Bill {
     public double getOrderPrice(List<EItem> itemsOrdered, User user)
             throws TotalAmountExceededException {
         double totalAmount = itemsOrdered.stream()
-                .mapToDouble(eItem -> eItem.getPrice())
+                .mapToDouble(EItem::getPrice)
                 .sum();
 
         double processorDiscount = getProcessorDiscount(itemsOrdered);
@@ -19,12 +19,13 @@ public class EShopBill implements Bill {
         double mouseOrKeyboardDiscount =
                 getMouseOrKeyBoardDiscount(itemsOrdered);
 
+        double totalDiscount = getOverallDiscount(totalAmount);
+
         return totalAmount - processorDiscount - mouseDiscount -
-                mouseOrKeyboardDiscount;
+                mouseOrKeyboardDiscount - totalDiscount;
     }
 
-    private double getProcessorDiscount(List<EItem> itemsOrdered)
-            throws TotalAmountExceededException {
+    private double getProcessorDiscount(List<EItem> itemsOrdered) {
          long numberProcessor = itemsOrdered.stream()
                 .filter(item -> item.getEItemType() == EItemType.PROCESSOR)
                  .count();
@@ -32,14 +33,13 @@ public class EShopBill implements Bill {
          if(numberProcessor > 5) {
              minimumPrice = itemsOrdered.stream()
                      .filter(item -> item.getEItemType() == EItemType.PROCESSOR)
-                     .mapToDouble(item -> item.getPrice()).min()
+                     .mapToDouble(EItem::getPrice).min()
                      .orElse(0.00);
          }
          return 0.5*minimumPrice;
     }
 
-    private double getMouseDiscount(List<EItem> itemsOrdered)
-            throws TotalAmountExceededException {
+    private double getMouseDiscount(List<EItem> itemsOrdered) {
         long mouses = itemsOrdered.stream()
                 .filter(item -> item.getEItemType() == EItemType.MOUSE)
                 .count();
@@ -49,14 +49,13 @@ public class EShopBill implements Bill {
         if(mouses > 10) {
             minimumPrice = itemsOrdered.stream()
                     .filter(item -> item.getEItemType() == EItemType.MOUSE)
-                    .mapToDouble(item -> item.getPrice()).min()
+                    .mapToDouble(EItem::getPrice).min()
                     .orElse(0.00);
         }
         return minimumPrice;
     }
 
-    private double getMouseOrKeyBoardDiscount(List<EItem> itemsOrdered)
-            throws TotalAmountExceededException {
+    private double getMouseOrKeyBoardDiscount(List<EItem> itemsOrdered) {
         long mouses = itemsOrdered.stream()
                 .filter(item -> item.getEItemType() == EItemType.MOUSE)
                 .count();
@@ -71,9 +70,13 @@ public class EShopBill implements Bill {
             minimumPrice = itemsOrdered.stream()
                     .filter(item -> item.getEItemType() == EItemType.MOUSE ||
                             item.getEItemType() == EItemType.KEYBOARD)
-                    .mapToDouble(item -> item.getPrice()).min()
+                    .mapToDouble(EItem::getPrice).min()
                     .orElse(0.00);
         }
         return minimumPrice;
+    }
+
+    private double getOverallDiscount(double totalAmount) {
+        return totalAmount > 1000 ? totalAmount * 0.1 : 0;
     }
 }
