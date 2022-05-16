@@ -4,9 +4,8 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss;
 
-import java.util.List;
-
-public interface Bill {
-    double getOrderPrice(List<EItem> itemsOrdered, User user)
-            throws TotalItemsExceededException, EmptyOrderException;
+public class TotalItemsExceededException extends Exception {
+    public TotalItemsExceededException(String msg){
+        super(msg);
+    }
 }

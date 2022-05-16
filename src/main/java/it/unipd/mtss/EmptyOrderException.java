@@ -4,8 +4,8 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss;
 
-public class TotalAmountExceededException extends Exception {
-    public TotalAmountExceededException(String msg){
-        super(msg);
+public class EmptyOrderException extends Exception{
+    public EmptyOrderException(String cause) {
+        super(cause);
     }
 }

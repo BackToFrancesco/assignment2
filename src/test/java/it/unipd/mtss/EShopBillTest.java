@@ -24,20 +24,20 @@ public class EShopBillTest {
         bill = new EShopBill();
     }
 
-    @Test
-    public void EmptyOrderTest() throws TotalAmountExceededException {
+    @Test(expected = EmptyOrderException.class)
+    public void EmptyOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
-        List<EItem> items = new LinkedList<>();
+        List<EItem> itemList = new LinkedList<>();
 
         // Act
-        double total = bill.getOrderPrice(items, user);
+        bill.getOrderPrice(itemList, user);
 
         // Assert
-        assert total == 0.00;
+        fail();
     }
 
     @Test
-    public void NonEmptyOrderTest() throws TotalAmountExceededException {
+    public void NonEmptyOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         EItem item1 = new EItem("Logitech xxx", EItemType.MOUSE, 50.00);
@@ -52,7 +52,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void LessThanFiveProcessorDiscountOrderTest() throws TotalAmountExceededException {
+    public void LessThanFiveProcessorDiscountOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 10.00));
@@ -70,7 +70,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void MoreThanFiveProcessorDiscountOrderTest() throws TotalAmountExceededException {
+    public void MoreThanFiveProcessorDiscountOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 10.00));
@@ -89,7 +89,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void LessThanTenMouseOrderTest() throws TotalAmountExceededException {
+    public void LessThanTenMouseOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         items.add(new EItem("Logitech xxx", EItemType.MOUSE, 5.00));
@@ -106,7 +106,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void MoreThanTenMouseOrderTest() throws TotalAmountExceededException {
+    public void MoreThanTenMouseOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
 
@@ -131,7 +131,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void NumberMouseEqualsKeyboardGreaterThanZeroDiscountTest() throws TotalAmountExceededException {
+    public void NumberMouseEqualsKeyboardGreaterThanZeroDiscountTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
 
@@ -151,7 +151,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void NumberMouseEqualsKeyboardEqualZeroDiscountTest() throws TotalAmountExceededException {
+    public void NumberMouseEqualsKeyboardEqualZeroDiscountTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 100.00));
@@ -166,7 +166,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void NumberMouseDiffersKeyboardDiscountTest() throws TotalAmountExceededException {
+    public void NumberMouseDiffersKeyboardDiscountTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
 
@@ -187,7 +187,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void LessThanOneThousandTotalOrderTest() throws TotalAmountExceededException {
+    public void LessThanOneThousandTotalOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 340.00));
@@ -201,7 +201,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void MoreThanOneThousandTotalOrderTest() throws TotalAmountExceededException {
+    public void MoreThanOneThousandTotalOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 640.00));
@@ -215,7 +215,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void ProcessorAndTotalAmountDiscountOrderTest() throws TotalAmountExceededException {
+    public void ProcessorAndTotalAmountDiscountOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         EItem genericProcessor = new EItem("Intel i9 10900k", EItemType.PROCESSOR, 449.00);
@@ -235,7 +235,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void ProcessorAndNoTotalAmountDiscountOrderTest() throws TotalAmountExceededException {
+    public void ProcessorAndNoTotalAmountDiscountOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         EItem genericProcessor = new EItem("Intel i2 1024", EItemType.PROCESSOR, 150.00);
@@ -253,7 +253,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void MouseAndTotalAmountDiscountOrderTest() throws TotalAmountExceededException {
+    public void MouseAndTotalAmountDiscountOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         EItem genericMouse = new EItem("Logitech M185", EItemType.MOUSE, 15.00);
@@ -271,7 +271,7 @@ public class EShopBillTest {
     }
 
     @Test
-    public void MouseAndNoTotalAmountDiscountOrderTest() throws TotalAmountExceededException {
+    public void MouseAndNoTotalAmountDiscountOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> items = new ArrayList<>();
         EItem genericMouse = new EItem("Logitech M185", EItemType.MOUSE, 15.00);
@@ -286,8 +286,8 @@ public class EShopBillTest {
         assert total == 300 - 15;
     }
 
-    @Test(expected = TotalAmountExceededException.class)
-    public void Over30ItemsOrderTest() throws TotalAmountExceededException {
+    @Test(expected = TotalItemsExceededException.class)
+    public void Over30ItemsOrderTest() throws TotalItemsExceededException, EmptyOrderException {
         // Arrange
         List<EItem> itemList = new LinkedList<>();
         EItem item = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 50.00);
@@ -301,6 +301,47 @@ public class EShopBillTest {
 
         // Assert
         fail();
+    }
 
+    @Test
+    public void LessThanTenTotalAmountOrderTest() throws TotalItemsExceededException, EmptyOrderException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+        EItem genericMouse = new EItem("Logitech M18", EItemType.MOUSE, 7.00);
+        items.add(genericMouse);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 7 + 2;
+    }
+
+    @Test
+    public void EqualToTenTotalAmountOrderTest() throws TotalItemsExceededException, EmptyOrderException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+        EItem genericMouse = new EItem("Logitech M18", EItemType.MOUSE, 10.00);
+        items.add(genericMouse);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 10;
+    }
+
+    @Test
+    public void OverThanTenTotalAmountOrderTest() throws TotalItemsExceededException, EmptyOrderException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+        EItem genericMouse = new EItem("Logitech M18", EItemType.MOUSE, 15.00);
+        items.add(genericMouse);
+
+        // Act
+        double total = bill.getOrderPrice(items, user);
+
+        // Assert
+        assert total == 15;
     }
 }
