@@ -7,6 +7,8 @@ package it.unipd.mtss;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.fail;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,7 +97,7 @@ public class EShopBillTest {
         items.add(new EItem("Logitech xxx", EItemType.MOUSE, 7.00));
         items.add(new EItem("Asus Sabertooth xxx", EItemType.MOTHERBOARD, 130.00));
         items.add(new EItem("Intel i5 xxx", EItemType.PROCESSOR, 73.41));
-        
+
         // Act
         double total = bill.getOrderPrice(items, user);
 
@@ -120,7 +122,6 @@ public class EShopBillTest {
         items.add(new EItem("Logitech xxx", EItemType.MOUSE, 5.00));
         items.add(new EItem("Logitech xxx", EItemType.MOUSE, 6.00));
         items.add(new EItem("Logitech xxx", EItemType.MOUSE, 7.00));
-
 
         // Act
         double total = bill.getOrderPrice(items, user);
@@ -283,5 +284,23 @@ public class EShopBillTest {
 
         // Assert
         assert total == 300 - 15;
+    }
+
+    @Test(expected = TotalAmountExceededException.class)
+    public void Over30ItemsOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> itemList = new LinkedList<>();
+        EItem item = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 50.00);
+
+        for (int i = 0; i < 31; i++) {
+            itemList.add(item);
+        }
+
+        // Act
+        bill.getOrderPrice(itemList, user);
+
+        // Assert
+        fail();
+
     }
 }

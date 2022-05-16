@@ -4,12 +4,16 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss;
 
+import java.util.Date;
 import java.util.List;
 
 public class EShopBill implements Bill {
     @Override
     public double getOrderPrice(List<EItem> itemsOrdered, User user)
             throws TotalAmountExceededException {
+        if(itemsOrdered.stream().count() > 30) {
+            throw new TotalAmountExceededException("Limit of orders exceeded");
+        }
         double totalAmount = itemsOrdered.stream()
                 .mapToDouble(EItem::getPrice)
                 .sum();
