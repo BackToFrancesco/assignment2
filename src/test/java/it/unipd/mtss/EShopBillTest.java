@@ -79,7 +79,7 @@ public class EShopBillTest {
     public void MoreFiveProcessorOrderTest() throws TotalAmountExceededException {
         // Arrange
         List<EItem> items = new LinkedList<>();
-        EItem item1 = new EItem("Amd xxx", EItemType.PROCESSOR, 10.00);
+        EItem item1 = new EItem("Amd xxx", EItemType.PROCESSOR, 10.00); // 5.00
         EItem item2 = new EItem("Amd xxx", EItemType.PROCESSOR, 20.00);
         EItem item3 = new EItem("Amd xxx", EItemType.PROCESSOR, 30.00);
         EItem item4 = new EItem("Amd xxx", EItemType.PROCESSOR, 40.00);
@@ -238,5 +238,23 @@ public class EShopBillTest {
 
         // Assert
         assert total == 450.00;
+    }
+
+    @Test(expected = TotalAmountExceededException.class)
+    public void Over30ItemsOrderTest() throws TotalAmountExceededException {
+        // Arrange
+        List<EItem> itemList = new LinkedList<>();
+        EItem item = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 50.00);
+
+        for(int i = 0; i < 31; i++) {
+            itemList.add(item);
+        }
+
+        // Act
+        bill.getOrderPrice(itemList, user);
+
+        // Assert
+        fail();
+
     }
 }

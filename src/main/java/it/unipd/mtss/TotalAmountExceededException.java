@@ -4,4 +4,8 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss;
 
-public class TotalAmountExceededException extends Exception {}
+public class TotalAmountExceededException extends Exception {
+    public TotalAmountExceededException(String msg){
+        super(msg);
+    }
+}
