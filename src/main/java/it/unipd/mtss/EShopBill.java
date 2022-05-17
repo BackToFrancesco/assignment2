@@ -102,11 +102,12 @@ public class EShopBill implements Bill {
         List<User> userList = new ArrayList<>();
         List<Order> freeOrders = new ArrayList<>();
 
-        List<Order> eligibleOrders = itemOrders.stream()
+        ArrayList<Order> eligibleOrders = new ArrayList<>(itemOrders.stream()
                 .filter(item -> !item.getUser().isOver18() &&
                         item.getOrderTime().isAfter(Order.startFreeOrderTime) &&
                         item.getOrderTime().isBefore(Order.endFreeOrderTime))
-                .toList();
+                .toList());
+
         while(freeOrders.size() < 10 && eligibleOrders.size() > 0) {
             int randomIndex = (int)(Math.random() * (eligibleOrders.size()));
             if(!userList.stream().anyMatch(user ->

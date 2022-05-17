@@ -20,6 +20,6 @@ public class User {
     }
 
     public boolean isOver18() {
-        return LocalDate.now().minusYears(18).isBefore(birthdate);
+        return LocalDate.now().minusYears(18).isAfter(birthdate);
     }
 }
