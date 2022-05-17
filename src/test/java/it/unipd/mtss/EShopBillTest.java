@@ -404,4 +404,70 @@ public class EShopBillTest {
         // Assert
         assert giftedOrders == 1;
     }
+
+    @Test
+    public void giveAwayWithDuplicateUnder18UsersInTimeTest() throws BillException {
+        // Arrange
+        List<Order> listOrders = new ArrayList<>();
+        List<EItem> listEItem = new LinkedList<>();
+        listEItem.add(new EItem("Logitech M18", EItemType.MOUSE, 15.00));
+        listOrders.add(new Order(LocalTime.of(18,59,59), userUnder18, listEItem, bill.getOrderPrice(listEItem,userUnder18)));
+        listOrders.add(new Order(LocalTime.of(18,59,58), userUnder18, listEItem, bill.getOrderPrice(listEItem,userUnder18)));
+
+        // Act
+        int giftedOrders = bill.getUnder18FreeOrders(listOrders).size();
+
+        // Assert
+        assert giftedOrders == 1;
+    }
+
+    @Test
+    public void giveAwayWithMixedUserLessThanTenUnder18Test() throws BillException {
+        // Arrange
+        User anotherUserUnder18 = new User("TEST", "Test", "Testing", "test@test.com", LocalDate.of(2006, 2, 26));
+        User anotherUserOver18 = new User("TEST", "Test", "Testing", "test@test.com", LocalDate.of(2000, 1, 4));
+
+        List<Order> listOrders = new ArrayList<>();
+        List<EItem> listEItem = new LinkedList<>();
+
+        listEItem.add(new EItem("Logitech M18", EItemType.MOUSE, 15.00));
+
+        listOrders.add(new Order(LocalTime.of(18,59,59), userUnder18, listEItem, bill.getOrderPrice(listEItem,userUnder18)));
+        listOrders.add(new Order(LocalTime.of(18,59,58), anotherUserUnder18, listEItem, bill.getOrderPrice(listEItem,anotherUserUnder18)));
+
+        listOrders.add(new Order(LocalTime.of(18,59,59), userOver18, listEItem, bill.getOrderPrice(listEItem,userOver18)));
+        listOrders.add(new Order(LocalTime.of(18,59,59), anotherUserOver18, listEItem, bill.getOrderPrice(listEItem,anotherUserOver18)));
+
+
+        // Act
+        int giftedOrders = bill.getUnder18FreeOrders(listOrders).size();
+
+        // Assert
+        assert giftedOrders == 2;
+    }
+
+    @Test
+    public void giveAwayWithMixedUserMoreThanTenUnder18Test() throws BillException {
+        // Arrange
+        User anotherUserOver18 = new User("TEST", "Test", "Testing", "test@test.com", LocalDate.of(2000, 1, 4));
+
+        List<Order> listOrders = new ArrayList<>();
+        List<EItem> listEItem = new LinkedList<>();
+
+        listEItem.add(new EItem("Logitech M18", EItemType.MOUSE, 15.00));
+
+        for(int i = 1; i <= 11; i++) {
+            User anotherUserUnder18 = new User("TEST", "Test", "Testing", "test@test.com", LocalDate.of(2006, 4, i));
+            listOrders.add(new Order(LocalTime.of(18,59,59), anotherUserUnder18, listEItem, bill.getOrderPrice(listEItem,anotherUserUnder18)));
+        }
+
+        listOrders.add(new Order(LocalTime.of(18,59,59), userOver18, listEItem, bill.getOrderPrice(listEItem,userOver18)));
+
+
+        // Act
+        int giftedOrders = bill.getUnder18FreeOrders(listOrders).size();
+
+        // Assert
+        assert giftedOrders == 10;
+    }
 }
