@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface Bill {
     double getOrderPrice(List<EItem> itemsOrdered, User user)
-            throws TotalItemsExceededException, EmptyOrderException;
+            throws BillException;
 }

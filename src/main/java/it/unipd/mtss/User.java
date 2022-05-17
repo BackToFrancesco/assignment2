@@ -4,18 +4,22 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class User {
     private String cf, name, surname, email;
-    private Date birthdate;
+    private LocalDate birthdate;
 
-    User(String cf, String name, String surname, String email, Date birth) {
+    User(String cf, String name, String surname,
+         String email, LocalDate birth) {
         this.cf = cf;
         this.name = name;
         this.surname = surname;
         this.birthdate = birth;
         this.email = email;
+    }
+
+    public boolean isOver18() {
+        return LocalDate.now().minusYears(18).isBefore(birthdate);
     }
 }

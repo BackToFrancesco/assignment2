@@ -4,21 +4,22 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EShopBill implements Bill {
     @Override
     public double getOrderPrice(List<EItem> itemsOrdered, User user)
-            throws TotalItemsExceededException, EmptyOrderException {
+            throws BillException {
 
         double totalItems = itemsOrdered.stream().count();
 
         if(totalItems == 0) {
-            throw new EmptyOrderException("No items on the order");
+            throw new BillException("No items on the order");
         }
 
         if(itemsOrdered.stream().count() > 30) {
-            throw new TotalItemsExceededException("Limit of items exceeded");
+            throw new BillException("Limit of items exceeded");
         }
 
         double totalAmount = itemsOrdered.stream()
@@ -94,5 +95,28 @@ public class EShopBill implements Bill {
 
     private double getCommissionAmount(double totalAmount) {
         return totalAmount < 10 ? 2 : 0;
+    }
+
+    public List<Order> getUnder18FreeOrders(List<Order> itemOrders) {
+
+        List<User> userList = new ArrayList<>();
+        List<Order> freeOrders = new ArrayList<>();
+
+        List<Order> eligibleOrders = itemOrders.stream()
+                .filter(item -> !item.getUser().isOver18() &&
+                        item.getOrderTime().isAfter(Order.startFreeOrderTime) &&
+                        item.getOrderTime().isBefore(Order.endFreeOrderTime))
+                .toList();
+        while(freeOrders.size() < 10 && eligibleOrders.size() > 0) {
+            int randomIndex = (int)(Math.random() * (eligibleOrders.size()));
+            if(!userList.stream().anyMatch(user ->
+                            user == eligibleOrders.get(randomIndex).getUser())
+            ) {
+                userList.add(eligibleOrders.get(randomIndex).getUser());
+                freeOrders.add(eligibleOrders.get(randomIndex));
+            }
+            eligibleOrders.remove(randomIndex);
+        }
+        return freeOrders;
     }
 }

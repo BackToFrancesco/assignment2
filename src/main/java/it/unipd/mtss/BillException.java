@@ -4,8 +4,8 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss;
 
-public class EmptyOrderException extends Exception{
-    public EmptyOrderException(String cause) {
-        super(cause);
+public class BillException extends Exception {
+    public BillException(String msg){
+        super(msg);
     }
 }
