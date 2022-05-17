@@ -89,6 +89,22 @@ public class EShopBillTest {
     }
 
     @Test
+    public void MoreThanFiveEqualProcessorDiscountOrderTest() throws BillException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+
+        for(int i = 0; i < 6; i++) {
+            items.add(new EItem("Amd xxx", EItemType.PROCESSOR, 60.00));
+        }
+
+        // Act
+        double total = bill.getOrderPrice(items, userOver18);
+
+        // Assert
+        assert total == 360 - 30;
+    }
+
+    @Test
     public void LessThanTenMouseOrderTest() throws BillException {
         // Arrange
         List<EItem> items = new ArrayList<>();
@@ -166,6 +182,23 @@ public class EShopBillTest {
     }
 
     @Test
+    public void NumberMouseKeyboardAllEqualsTest() throws BillException {
+        // Arrange
+        List<EItem> items = new ArrayList<>();
+
+        for(int i = 0; i < 3; i++) {
+            items.add(new EItem("Logitech keyboard xxx", EItemType.KEYBOARD, 15.00));
+            items.add(new EItem("Super Logitech Mouse xxx", EItemType.MOUSE, 15.00));
+        }
+
+        // Act
+        double total = bill.getOrderPrice(items, userOver18);
+
+        // Assert
+        assert total == 90 - 15;
+    }
+
+    @Test
     public void NumberMouseDiffersKeyboardDiscountTest() throws BillException {
         // Arrange
         List<EItem> items = new ArrayList<>();
@@ -218,14 +251,14 @@ public class EShopBillTest {
     public void ProcessorAndTotalAmountDiscountOrderTest() throws BillException {
         // Arrange
         List<EItem> items = new ArrayList<>();
-        EItem genericProcessor = new EItem("Intel i9 10900k", EItemType.PROCESSOR, 449.00);
         EItem specificProcessor = new EItem("Intel i5 5280", EItemType.PROCESSOR, 150.00);
         EItem item1 = new EItem("Logitech M185", EItemType.MOUSE, 15.00);
 
         items.add(item1);
         items.add(specificProcessor);
+
         for (int i = 0; i < 5; i++)
-            items.add(genericProcessor);
+            items.add(new EItem("Intel i9 10900k", EItemType.PROCESSOR, 449.00));
 
         // Act
         double total = bill.getOrderPrice(items, userOver18);
@@ -238,12 +271,11 @@ public class EShopBillTest {
     public void ProcessorAndNoTotalAmountDiscountOrderTest() throws BillException {
         // Arrange
         List<EItem> items = new ArrayList<>();
-        EItem genericProcessor = new EItem("Intel i2 1024", EItemType.PROCESSOR, 150.00);
         EItem specificProcessor = new EItem("Intel Pentium", EItemType.PROCESSOR, 90.00);
 
         items.add(specificProcessor);
         for (int i = 0; i < 6; i++)
-            items.add(genericProcessor);
+            items.add(new EItem("Intel i2 1024", EItemType.PROCESSOR, 150.00));
 
         // Act
         double total = bill.getOrderPrice(items, userOver18);
@@ -256,12 +288,11 @@ public class EShopBillTest {
     public void MouseAndTotalAmountDiscountOrderTest() throws BillException {
         // Arrange
         List<EItem> items = new ArrayList<>();
-        EItem genericMouse = new EItem("Logitech M185", EItemType.MOUSE, 15.00);
         EItem processor = new EItem("Intel i9 10900k", EItemType.PROCESSOR, 849.00);
 
         items.add(processor);
         for (int i = 0; i < 15; i++)
-            items.add(genericMouse);
+            items.add(new EItem("Logitech M185", EItemType.MOUSE, 15.00));
 
         // Act
         double total = bill.getOrderPrice(items, userOver18);
@@ -274,10 +305,9 @@ public class EShopBillTest {
     public void MouseAndNoTotalAmountDiscountOrderTest() throws BillException {
         // Arrange
         List<EItem> items = new ArrayList<>();
-        EItem genericMouse = new EItem("Logitech M185", EItemType.MOUSE, 15.00);
 
         for (int i = 0; i < 20; i++)
-            items.add(genericMouse);
+            items.add(new EItem("Logitech M185", EItemType.MOUSE, 15.00));
 
         // Act
         double total = bill.getOrderPrice(items, userOver18);
@@ -290,10 +320,9 @@ public class EShopBillTest {
     public void Over30ItemsOrderTest() throws BillException {
         // Arrange
         List<EItem> itemList = new LinkedList<>();
-        EItem item = new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 50.00);
 
         for (int i = 0; i < 31; i++) {
-            itemList.add(item);
+            itemList.add(new EItem("Asus Sabertooth xxx", EItemType.KEYBOARD, 50.00));
         }
 
         // Act
@@ -413,6 +442,7 @@ public class EShopBillTest {
         listEItem.add(new EItem("Logitech M18", EItemType.MOUSE, 15.00));
         listOrders.add(new Order(LocalTime.of(18,59,59), userUnder18, listEItem, bill.getOrderPrice(listEItem,userUnder18)));
         listOrders.add(new Order(LocalTime.of(18,59,58), userUnder18, listEItem, bill.getOrderPrice(listEItem,userUnder18)));
+        listOrders.add(new Order(LocalTime.of(19,59,58), userUnder18, listEItem, bill.getOrderPrice(listEItem,userUnder18)));
 
         // Act
         int giftedOrders = bill.getUnder18FreeOrders(listOrders).size();
@@ -438,7 +468,6 @@ public class EShopBillTest {
         listOrders.add(new Order(LocalTime.of(18,59,59), userOver18, listEItem, bill.getOrderPrice(listEItem,userOver18)));
         listOrders.add(new Order(LocalTime.of(18,59,59), anotherUserOver18, listEItem, bill.getOrderPrice(listEItem,anotherUserOver18)));
 
-
         // Act
         int giftedOrders = bill.getUnder18FreeOrders(listOrders).size();
 
@@ -462,7 +491,6 @@ public class EShopBillTest {
         }
 
         listOrders.add(new Order(LocalTime.of(18,59,59), userOver18, listEItem, bill.getOrderPrice(listEItem,userOver18)));
-
 
         // Act
         int giftedOrders = bill.getUnder18FreeOrders(listOrders).size();
